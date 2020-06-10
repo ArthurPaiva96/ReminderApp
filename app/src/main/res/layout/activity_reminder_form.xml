@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <EditText
+        android:id="@+id/activity_reminder_form_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:inputType="textCapWords"
+        android:hint="Lembrar do quê?"/>
+
+    <EditText
+        android:id="@+id/activity_reminder_form_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:inputType="text"
+        android:hint="Descrição"/>
+
+    <EditText
+        android:id="@+id/activity_reminder_form_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="8dp"
+        android:inputType="date"
+        android:hint="Qual o dia?"/>
+
+    <EditText
+        android:id="@+id/activity_reminder_form_hour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="8dp"
+        android:inputType="time"
+        android:hint="E a hora?"/>
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_reminder_form_save_button"
+        android:layout_margin="8dp"
+        android:text="Me lembre!" />
+
+
+</LinearLayout>
