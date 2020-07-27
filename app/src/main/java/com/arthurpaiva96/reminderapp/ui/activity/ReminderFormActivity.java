@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arthurpaiva96.reminderapp.R;
 import com.arthurpaiva96.reminderapp.dao.ReminderDAO;
 import com.arthurpaiva96.reminderapp.model.Reminder;
+import com.arthurpaiva96.reminderapp.ui.ReminderFormView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,6 +38,7 @@ public class ReminderFormActivity extends AppCompatActivity {
     private EditText reminderHourInput;
 
     private Reminder reminder = new Reminder();
+    private ReminderFormView reminderFormView = new ReminderFormView(ReminderFormActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,96 +47,21 @@ public class ReminderFormActivity extends AppCompatActivity {
         setTitle(TITLE_ADD_NEW_REMINDER);
 
         getUserInputInfo();
+        fillFormWithExtra();
 
-
-        configureDatePicker();
-
-        configureTimePicker();
+        this.reminderFormView.configureDatePicker(this.reminderDateInput);
+        this.reminderFormView.configureTimePicker(this.reminderHourInput);
 
         configureSaveButton();
 
 
     }
 
-    private void configureTimePicker() {
-        final TimePickerDialog.OnTimeSetListener actionsAfterChooseTime = setHourAfterChoose();
-
-        this.reminderHourInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialog(ReminderFormActivity.this,
-                        actionsAfterChooseTime, 0, 0, true)
-                        .show();
-            }
-        });
-    }
-
-    private TimePickerDialog.OnTimeSetListener setHourAfterChoose() {
-        return new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                reminderHourInput.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minute));
-            }
-        };
-    }
 
 
-    private void configureDatePicker() {
 
-        final Calendar calendar = Calendar.getInstance();
 
-        final DatePickerDialog.OnDateSetListener actionsAfterChooseDate = setDateAfterChoose(calendar);
 
-        this.reminderDateInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(ReminderFormActivity.this,
-                        actionsAfterChooseDate,
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-    }
-
-    private DatePickerDialog.OnDateSetListener setDateAfterChoose(final Calendar calendar) {
-        return new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, month);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    reminderDateInput.setText(new SimpleDateFormat(
-                            "dd/MM/yyyy", new Locale("pt","BR"))
-                            .format(calendar.getTime()));
-
-                }
-            };
-    }
-
-    private void configureSaveButton() {
-        Button saveReminderButton = findViewById(R.id.activity_reminder_form_save_button);
-
-        fillFormWithExtra();
-
-        saveReminderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveUserInputAsReminder();
-
-                Toast.makeText(ReminderFormActivity.this, TOAST_AFTER_ADD_REMINDER,
-                        Toast.LENGTH_LONG).show();
-
-                startActivity(new Intent(ReminderFormActivity.this, ReminderListActivity.class));
-
-                finish();
-
-            }
-        });
-    }
 
     private void fillFormWithExtra() {
         Reminder reminderExtra = (Reminder) getIntent().getSerializableExtra(KEY_REMINDER_EXTRA);
@@ -163,21 +90,19 @@ public class ReminderFormActivity extends AppCompatActivity {
         this.reminderHourInput.setInputType(EditorInfo.TYPE_NULL);
     }
 
-    private void saveUserInputAsReminder() {
+    private void configureSaveButton() {
 
-        String reminderTitle = this.reminderTitleInput.getText().toString();
-        String reminderDescription = this.reminderDescriptionInput.getText().toString();
-        String reminderDate = this.reminderDateInput.getText().toString();
-        String reminderHour = this.reminderHourInput.getText().toString();
+        Button saveReminderButton = findViewById(R.id.activity_reminder_form_save_button);
 
-        this.reminder.setTitle(reminderTitle);
-        this.reminder.setDescription(reminderDescription);
-        this.reminder.setDate(reminderDate);
-        this.reminder.setHour(reminderHour);
-
-        new ReminderDAO().editReminder(this.reminder);
+        this.reminderFormView.saveButtonBehavior(saveReminderButton, this.reminder,
+                this.reminderTitleInput,
+                this.reminderDescriptionInput,
+                this.reminderDateInput,
+                this.reminderHourInput);
 
     }
+
+
 
 
 }
