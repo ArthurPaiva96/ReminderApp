@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:inputType="textCapWords"
-            android:hint="Lembrar do quê?"/>
+            android:hint="@string/activity_reminder_form_title_hint"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/activity_reminder_form_description"
@@ -22,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:inputType="text"
-            android:hint="Descrição"/>
+            android:hint="@string/activity_reminder_form_description_hint"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/activity_reminder_form_date"
@@ -30,8 +32,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_margin="8dp"
+            android:focusable="false"
+            android:hint="@string/activity_reminder_form_date_hint"
             android:inputType="date"
-            android:hint="Qual o dia?"/>
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/activity_reminder_form_hour"
@@ -39,8 +43,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_margin="8dp"
-            android:inputType="time"
-            android:hint="E a hora?"/>
+            android:focusable="false"
+            android:hint="@string/activity_reminder_form_hour_hint"
+            android:inputType="none"
+            android:importantForAutofill="no" />
 
 
         <Button
@@ -48,7 +54,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/activity_reminder_form_save_button"
             android:layout_margin="8dp"
-            android:text="Me lembre!" />
+            android:text="@string/activity_reminder_form_save_button_text" />
 
 
     </LinearLayout>

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ReminderApp</string>
+    <string name="activity_menu_new_reminder_text">Novo Lembrete</string>
+    <string name="activity_menu_reminder_list_text">Lista de Lembretes</string>
+    <string name="activity_reminder_form_title_hint">Lembrar do quê?</string>
+    <string name="activity_reminder_form_date_hint">Qual o dia?</string>
+    <string name="activity_reminder_form_description_hint">Descrição</string>
+    <string name="activity_reminder_form_hour_hint">E a hora?</string>
+    <string name="activity_reminder_form_save_button_text">Me lembre!</string>
+    <string name="activity_reminder_list_menu_edit_text">Editar lembrete</string>
+    <string name="activity_reminder_list_menu_delete_text">Remover lembrete</string>
 </resources>

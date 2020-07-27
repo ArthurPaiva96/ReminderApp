@@ -1,12 +1,13 @@
 package com.arthurpaiva96.reminderapp.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +17,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arthurpaiva96.reminderapp.R;
 import com.arthurpaiva96.reminderapp.dao.ReminderDAO;
 import com.arthurpaiva96.reminderapp.model.Reminder;
+import com.arthurpaiva96.reminderapp.ui.adapter.ReminderListAdapter;
 
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.KEY_REMINDER_EXTRA;
+import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.MESSAGE_DELETE_REMINDER;
+import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.OPTION_MESSAGE_DELETE_REMINDER_NO;
+import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.OPTION_MESSAGE_DELETE_REMINDER_YES;
+import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_DELETE_REMINDER;
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_LIST;
 
 public class ReminderListActivity extends AppCompatActivity {
 
-    private ArrayAdapter<Reminder> adapter;
+
+    private ReminderListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,14 +38,13 @@ public class ReminderListActivity extends AppCompatActivity {
         setTitle(TITLE_LIST);
 
         final ListView reminderListView = findViewById(R.id.activity_reminder_list_list);
-        this.adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
+        adapter = new ReminderListAdapter(this);
         reminderListView.setAdapter(adapter);
 
         registerForContextMenu(reminderListView);
 
         configureItemClickListener(reminderListView);
-
 
     }
 
@@ -71,18 +77,33 @@ public class ReminderListActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    private void deleteReminder(Reminder chosenReminder) {
+    private void deleteReminder(final Reminder chosenReminder) {
 
-        new ReminderDAO().deleteAReminder(chosenReminder);
-        adapter.remove(chosenReminder);
+        new AlertDialog
+                .Builder(this)
+                .setTitle(TITLE_DELETE_REMINDER)
+                .setMessage(MESSAGE_DELETE_REMINDER + chosenReminder.getTitle() + "?")
+                .setNegativeButton(OPTION_MESSAGE_DELETE_REMINDER_NO, null)
+                //DELETE THE REMINDER
+                .setPositiveButton(OPTION_MESSAGE_DELETE_REMINDER_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new ReminderDAO().deleteAReminder(chosenReminder);
+                        adapter.remove(chosenReminder);
+                    }
+                })
+                .show();
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        adapter.clear();
-        adapter.addAll(new ReminderDAO().getAllReminders());
+
+        adapter.refreshReminderList(new ReminderDAO().getAllReminders());
+
 
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="2"
-    android:background="@color/colorWinter"
+    android:theme="@style/BackgroundColorWinter"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,7 +21,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:text="Novo Lembrete" />
+            android:text="@string/activity_menu_new_reminder_text" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -36,17 +36,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Lista de Lembretes" />
+            android:text="@string/activity_menu_reminder_list_text" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_menu_float_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:clickable="true"
+            android:focusable="true"
             app:srcCompat="@drawable/ic_stat_add" />
 
     </RelativeLayout>

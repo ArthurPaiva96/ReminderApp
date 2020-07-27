@@ -8,12 +8,12 @@ import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.DEFA
 
 public class ReminderDAO {
 
-    private final static List<Reminder> reminderList = new ArrayList<Reminder>();
+    private final static List<Reminder> reminderList = new ArrayList<>();
     private static int idCounter = 0;
 
     public void save(Reminder newReminder) {
         idCounter++;
-        newReminder.setId(this.idCounter);
+        newReminder.setId(idCounter);
         reminderList.add(newReminder);
     }
 

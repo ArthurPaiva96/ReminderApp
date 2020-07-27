@@ -34,13 +34,6 @@ public class Reminder implements Serializable {
 
     private String hour;
 
-    public Reminder(String title, String description, String date, String hour) {
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.hour = hour;
-    }
-
     public String getTitle() {
         return title;
     }
