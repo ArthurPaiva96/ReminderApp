@@ -11,6 +11,7 @@ public interface ConstantsActivities {
     String OPTION_MESSAGE_DELETE_REMINDER_YES = "Sim";
 
     String TOAST_AFTER_ADD_REMINDER = "Lembrete salvo! ;)";
+    String TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL = "Todos os campos precisam ser preenchidos";
 
     String KEY_REMINDER_EXTRA = "reminder";
     int DEFAULT_ID = 0;

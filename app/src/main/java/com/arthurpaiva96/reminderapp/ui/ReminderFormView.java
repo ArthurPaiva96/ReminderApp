@@ -12,22 +12,26 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.arthurpaiva96.reminderapp.dao.ReminderDAO;
+import com.arthurpaiva96.reminderapp.broadcast.ReminderAlarmManager;
+import com.arthurpaiva96.reminderapp.database.ReminderDatabase;
+import com.arthurpaiva96.reminderapp.database.dao.ReminderDAO;
 import com.arthurpaiva96.reminderapp.model.Reminder;
-import com.arthurpaiva96.reminderapp.ui.activity.ReminderFormActivity;
 import com.arthurpaiva96.reminderapp.ui.activity.ReminderListActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.DEFAULT_ID;
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TOAST_AFTER_ADD_REMINDER;
+import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL;
 
 public class ReminderFormView {
 
     private final Context context;
 
-    public ReminderFormView(Context context){
+    public ReminderFormView(Context context) {
         this.context = context;
     }
 
@@ -75,7 +79,7 @@ public class ReminderFormView {
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 reminderDateInput.setText(new SimpleDateFormat(
-                        "dd/MM/yyyy", new Locale("pt","BR"))
+                        "dd/MM/yyyy", new Locale("pt", "BR"))
                         .format(calendar.getTime()));
 
             }
@@ -83,12 +87,11 @@ public class ReminderFormView {
     }
 
 
-
     private TimePickerDialog.OnTimeSetListener setHourAfterChoose(final EditText reminderHourInput) {
         return new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                reminderHourInput.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minute));
+                reminderHourInput.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
             }
         };
     }
@@ -135,8 +138,43 @@ public class ReminderFormView {
         reminderToBeSaved.setDate(reminderDate);
         reminderToBeSaved.setHour(reminderHour);
 
-        new ReminderDAO().editReminder(reminderToBeSaved);
+        if(allFieldsAreNotNull(reminderToBeSaved)) {
+            this.saveReminder(reminderToBeSaved);
+        }else{
+            Toast.makeText(context, TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean allFieldsAreNotNull(Reminder reminderToBeSaved) {
+        if(reminderToBeSaved.getTitle() == null || reminderToBeSaved.getDescription() == null
+        || reminderToBeSaved.getDate() == null || reminderToBeSaved.getHour() == null) return false;
+
+        return true;
+    }
+
+    private void saveReminder(Reminder reminderToBeSaved) {
+
+        ReminderDatabase reminderDatabase = ReminderDatabase.getInstance(context);
+        ReminderDAO reminderDAO = reminderDatabase.getRoomReminderDAO();
+
+        long savedReminderId = reminderToBeSaved.getId();
+
+        if (reminderToBeSaved.getId() == DEFAULT_ID) {
+            savedReminderId = reminderDAO.save(reminderToBeSaved);
+        } else {
+            reminderDAO.update(reminderToBeSaved);
+        }
+
+        if (reminderToBeSaved.reminderIsTodayInTheFuture())
+            this.setUpSavedReminderAlarm(savedReminderId, reminderDAO);
 
     }
+
+    private void setUpSavedReminderAlarm(long savedReminderId, ReminderDAO reminderDAO) {
+        Reminder reminder = reminderDAO.getReminderById(savedReminderId);
+        new ReminderAlarmManager(context, Arrays.asList(reminder)).setUpAllRemindersAlarms();
+    }
+
 
 }

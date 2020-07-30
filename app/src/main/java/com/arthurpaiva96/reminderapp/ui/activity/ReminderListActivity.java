@@ -1,7 +1,6 @@
 package com.arthurpaiva96.reminderapp.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthurpaiva96.reminderapp.R;
-import com.arthurpaiva96.reminderapp.dao.ReminderDAO;
-import com.arthurpaiva96.reminderapp.model.Reminder;
 import com.arthurpaiva96.reminderapp.ui.ReminderListView;
 
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_LIST;
@@ -21,13 +18,14 @@ import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITL
 public class ReminderListActivity extends AppCompatActivity {
 
 
-    private ReminderListView reminderListView = new ReminderListView(ReminderListActivity.this);
+    private ReminderListView reminderListView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_list);
         setTitle(TITLE_LIST);
+        this.reminderListView  = new ReminderListView(ReminderListActivity.this);
 
         final ListView reminderListView = findViewById(R.id.activity_reminder_list_list);
 

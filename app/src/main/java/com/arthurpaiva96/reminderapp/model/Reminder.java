@@ -1,14 +1,19 @@
 package com.arthurpaiva96.reminderapp.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.DEFAULT_ID;
 
+@Entity
 public class Reminder implements Serializable {
 
-    private int id = DEFAULT_ID;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private String description;
     private String date;
@@ -62,5 +67,37 @@ public class Reminder implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public boolean reminderIsTodayInTheFuture() {
+
+        Calendar today = Calendar.getInstance();
+        Calendar reminderDate = this.getReminderDateAsCalendar();
+
+        if(reminderDate.after(today) && (
+                today.get(Calendar.YEAR) == reminderDate.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == reminderDate.get(Calendar.DAY_OF_YEAR)
+        )) return true;
+
+        return false;
+    }
+
+    private Calendar getReminderDateAsCalendar() {
+
+        Calendar reminderDate = Calendar.getInstance();
+
+        reminderDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(
+                this.getDate().substring(0,2)));
+        reminderDate.set(Calendar.MONTH, Integer.parseInt(
+                this.getDate().substring(3,5))-1);
+        reminderDate.set(Calendar.YEAR, Integer.parseInt(
+                this.getDate().substring(6)));
+
+        reminderDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(
+                this.getHour().substring(0,2)));
+        reminderDate.set(Calendar.MINUTE, Integer.parseInt(
+                this.getHour().substring(3)));
+
+        return reminderDate;
     }
 }

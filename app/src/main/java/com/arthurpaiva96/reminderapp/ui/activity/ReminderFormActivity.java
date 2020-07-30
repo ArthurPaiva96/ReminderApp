@@ -1,32 +1,22 @@
 package com.arthurpaiva96.reminderapp.ui.activity;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthurpaiva96.reminderapp.R;
-import com.arthurpaiva96.reminderapp.dao.ReminderDAO;
 import com.arthurpaiva96.reminderapp.model.Reminder;
 import com.arthurpaiva96.reminderapp.ui.ReminderFormView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.KEY_REMINDER_EXTRA;
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_ADD_NEW_REMINDER;
 import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_EDIT_REMINDER;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TOAST_AFTER_ADD_REMINDER;
 
 
 public class ReminderFormActivity extends AppCompatActivity {
@@ -53,7 +43,6 @@ public class ReminderFormActivity extends AppCompatActivity {
         this.reminderFormView.configureTimePicker(this.reminderHourInput);
 
         configureSaveButton();
-
 
     }
 

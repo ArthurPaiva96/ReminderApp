@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.arthurpaiva96.reminderapp">
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CALENDARAR"/>
 
     <application
         android:allowBackup="true"
@@ -10,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".ReminderApplication"
         tools:ignore="AllowBackup">
 
         <activity android:name=".ui.activity.MainMenuActivity">
@@ -23,6 +25,21 @@
 
         <activity android:name=".ui.activity.ReminderListActivity" />
         <activity android:name=".ui.activity.ReminderFormActivity"/>
+
+        <receiver android:name=".broadcast.receiver.ReminderBroadcastReceiver" android:exported="true"/>
+        <receiver android:name=".broadcast.receiver.NewDayBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED"></action>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcast.receiver.TurnOnPhoneBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
     </application>
+
 
 </manifest>
