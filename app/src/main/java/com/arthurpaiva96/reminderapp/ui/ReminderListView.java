@@ -18,25 +18,25 @@ import com.arthurpaiva96.reminderapp.model.Reminder;
 import com.arthurpaiva96.reminderapp.ui.activity.ReminderFormActivity;
 import com.arthurpaiva96.reminderapp.ui.adapter.ReminderListAdapter;
 
-import java.util.Arrays;
+import java.util.Collections;
 
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.KEY_REMINDER_EXTRA;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.MESSAGE_DELETE_REMINDER;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.OPTION_MESSAGE_DELETE_REMINDER_NO;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.OPTION_MESSAGE_DELETE_REMINDER_YES;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_DELETE_REMINDER;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.KEY_REMINDER_EXTRA;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.MESSAGE_DELETE_REMINDER;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.OPTION_MESSAGE_DELETE_REMINDER_NO;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.OPTION_MESSAGE_DELETE_REMINDER_YES;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TITLE_DELETE_REMINDER;
 
 public class ReminderListView {
 
-    private Context context;
+    private final Context context;
     private ReminderListAdapter adapter;
-    private ReminderDAO reminderDAO;
+    private final ReminderDAO reminderDAO;
 
     public ReminderListView(Context context){
         this.context = context;
 
         ReminderDatabase reminderDatabase = ReminderDatabase.getInstance(context);
-        this.reminderDAO = reminderDatabase.getRoomReminderDAO();
+        this.reminderDAO = reminderDatabase.getReminderDAO();
     }
 
     public void reminderListItemClickBehavior(ListView reminderListView) {
@@ -89,7 +89,7 @@ public class ReminderListView {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        new ReminderAlarmManager(context, Arrays.asList(chosenReminder)).deleteAllReminders();
+                        new ReminderAlarmManager(context, Collections.singletonList(chosenReminder)).deleteAllReminders();
                         reminderDAO.delete(chosenReminder);
                         adapter.remove(chosenReminder);
                     }

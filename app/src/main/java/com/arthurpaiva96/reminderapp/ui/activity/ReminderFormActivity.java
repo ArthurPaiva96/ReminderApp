@@ -1,7 +1,6 @@
 package com.arthurpaiva96.reminderapp.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +11,9 @@ import com.arthurpaiva96.reminderapp.R;
 import com.arthurpaiva96.reminderapp.model.Reminder;
 import com.arthurpaiva96.reminderapp.ui.ReminderFormView;
 
-import java.util.Calendar;
-
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.KEY_REMINDER_EXTRA;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_ADD_NEW_REMINDER;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_EDIT_REMINDER;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.KEY_REMINDER_EXTRA;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TITLE_ADD_NEW_REMINDER;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TITLE_EDIT_REMINDER;
 
 
 public class ReminderFormActivity extends AppCompatActivity {
@@ -28,7 +25,7 @@ public class ReminderFormActivity extends AppCompatActivity {
     private EditText reminderHourInput;
 
     private Reminder reminder = new Reminder();
-    private ReminderFormView reminderFormView = new ReminderFormView(ReminderFormActivity.this);
+    private final ReminderFormView reminderFormView = new ReminderFormView(ReminderFormActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

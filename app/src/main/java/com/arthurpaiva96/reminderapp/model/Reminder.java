@@ -7,8 +7,6 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.DEFAULT_ID;
-
 @Entity
 public class Reminder implements Serializable {
 
@@ -69,20 +67,15 @@ public class Reminder implements Serializable {
         return id;
     }
 
-    public boolean reminderIsTodayInTheFuture() {
+    public boolean reminderIsInTheFuture() {
 
         Calendar today = Calendar.getInstance();
         Calendar reminderDate = this.getReminderDateAsCalendar();
 
-        if(reminderDate.after(today) && (
-                today.get(Calendar.YEAR) == reminderDate.get(Calendar.YEAR) &&
-                        today.get(Calendar.DAY_OF_YEAR) == reminderDate.get(Calendar.DAY_OF_YEAR)
-        )) return true;
-
-        return false;
+        return reminderDate.getTimeInMillis() - today.getTimeInMillis() > 0;
     }
 
-    private Calendar getReminderDateAsCalendar() {
+    public Calendar getReminderDateAsCalendar() {
 
         Calendar reminderDate = Calendar.getInstance();
 
@@ -97,7 +90,15 @@ public class Reminder implements Serializable {
                 this.getHour().substring(0,2)));
         reminderDate.set(Calendar.MINUTE, Integer.parseInt(
                 this.getHour().substring(3)));
+        reminderDate.set(Calendar.SECOND, 0);
 
         return reminderDate;
+    }
+
+    public boolean allFieldsAreNotNull() {
+
+        return this.getTitle() != null && this.getDescription() != null
+                && this.getDate() != null && this.getHour() != null
+                && !this.getDate().isEmpty() && !this.getHour().isEmpty();
     }
 }

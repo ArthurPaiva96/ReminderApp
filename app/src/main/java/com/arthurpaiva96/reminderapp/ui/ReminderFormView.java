@@ -19,13 +19,13 @@ import com.arthurpaiva96.reminderapp.model.Reminder;
 import com.arthurpaiva96.reminderapp.ui.activity.ReminderListActivity;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.DEFAULT_ID;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TOAST_AFTER_ADD_REMINDER;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.DEFAULT_ID;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TOAST_AFTER_ADD_REMINDER;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL;
 
 public class ReminderFormView {
 
@@ -107,26 +107,31 @@ public class ReminderFormView {
             @Override
             public void onClick(View v) {
 
-                saveUserInputAsReminder(reminderToBeSaved, reminderTitleInput,
+                boolean savedSuccessfully = saveUserInputAsReminder(reminderToBeSaved, reminderTitleInput,
                         reminderDescriptionInput, reminderDateInput, reminderHourInput);
 
-                Toast.makeText(context, TOAST_AFTER_ADD_REMINDER,
-                        Toast.LENGTH_LONG).show();
+                if(savedSuccessfully) {
+                    Toast.makeText(context, TOAST_AFTER_ADD_REMINDER,
+                            Toast.LENGTH_LONG).show();
 
-                context.startActivity(new Intent(context, ReminderListActivity.class));
+                    context.startActivity(new Intent(context, ReminderListActivity.class));
 
-                ((Activity) context).finish();
+                    ((Activity) context).finish();
+                }else {
+                    Toast.makeText(context, TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL,
+                            Toast.LENGTH_LONG).show();
+                }
 
             }
         });
 
     }
 
-    private void saveUserInputAsReminder(Reminder reminderToBeSaved,
-                                         EditText reminderTitleInput,
-                                         EditText reminderDescriptionInput,
-                                         EditText reminderDateInput,
-                                         EditText reminderHourInput) {
+    private boolean saveUserInputAsReminder(Reminder reminderToBeSaved,
+                                            EditText reminderTitleInput,
+                                            EditText reminderDescriptionInput,
+                                            EditText reminderDateInput,
+                                            EditText reminderHourInput) {
 
         String reminderTitle = reminderTitleInput.getText().toString();
         String reminderDescription = reminderDescriptionInput.getText().toString();
@@ -138,25 +143,17 @@ public class ReminderFormView {
         reminderToBeSaved.setDate(reminderDate);
         reminderToBeSaved.setHour(reminderHour);
 
-        if(allFieldsAreNotNull(reminderToBeSaved)) {
+        if(reminderToBeSaved.allFieldsAreNotNull()) {
             this.saveReminder(reminderToBeSaved);
-        }else{
-            Toast.makeText(context, TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL,
-                    Toast.LENGTH_LONG).show();
+            return true;
         }
-    }
-
-    private boolean allFieldsAreNotNull(Reminder reminderToBeSaved) {
-        if(reminderToBeSaved.getTitle() == null || reminderToBeSaved.getDescription() == null
-        || reminderToBeSaved.getDate() == null || reminderToBeSaved.getHour() == null) return false;
-
-        return true;
+        return false;
     }
 
     private void saveReminder(Reminder reminderToBeSaved) {
 
         ReminderDatabase reminderDatabase = ReminderDatabase.getInstance(context);
-        ReminderDAO reminderDAO = reminderDatabase.getRoomReminderDAO();
+        ReminderDAO reminderDAO = reminderDatabase.getReminderDAO();
 
         long savedReminderId = reminderToBeSaved.getId();
 
@@ -166,14 +163,13 @@ public class ReminderFormView {
             reminderDAO.update(reminderToBeSaved);
         }
 
-        if (reminderToBeSaved.reminderIsTodayInTheFuture())
-            this.setUpSavedReminderAlarm(savedReminderId, reminderDAO);
+        this.setUpSavedReminderAlarm(savedReminderId, reminderDAO);
 
     }
 
     private void setUpSavedReminderAlarm(long savedReminderId, ReminderDAO reminderDAO) {
         Reminder reminder = reminderDAO.getReminderById(savedReminderId);
-        new ReminderAlarmManager(context, Arrays.asList(reminder)).setUpAllRemindersAlarms();
+        new ReminderAlarmManager(context, Collections.singletonList(reminder)).setUpAllRemindersAlarms();
     }
 
 

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arthurpaiva96.reminderapp.R;
 import com.arthurpaiva96.reminderapp.ui.ReminderListView;
 
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.TITLE_LIST;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TITLE_LIST;
 
 public class ReminderListActivity extends AppCompatActivity {
 

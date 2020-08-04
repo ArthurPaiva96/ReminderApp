@@ -1,12 +1,13 @@
 package com.arthurpaiva96.reminderapp.broadcast.receiver;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -14,8 +15,8 @@ import com.arthurpaiva96.reminderapp.R;
 import com.arthurpaiva96.reminderapp.database.ReminderDatabase;
 import com.arthurpaiva96.reminderapp.model.Reminder;
 
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.DEFAULT_ID;
-import static com.arthurpaiva96.reminderapp.ui.activity.ConstantsActivities.KEY_REMINDER_EXTRA;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.KEY_REMINDER_EXTRA;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.NOTIFICATION_CHANNEL;
 
 public class ReminderBroadcastReceiver extends BroadcastReceiver {
 
@@ -28,14 +29,15 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
         int reminderToNotifyId = (int) intent.getSerializableExtra(KEY_REMINDER_EXTRA);
         ReminderDatabase database = ReminderDatabase.getInstance(context);
 
-        Reminder reminderToNotify = database.getRoomReminderDAO().getReminderById(reminderToNotifyId);
+        Reminder reminderToNotify = database.getReminderDAO().getReminderById(reminderToNotifyId);
 
         if(reminderToNotify != null) sendNotification(context, reminderToNotify);
 
     }
 
+    //TODO customize notification
     private void sendNotification(Context context, Reminder reminderToNotify) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "TEMP")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(reminderToNotify.getTitle())
                 .setContentText(reminderToNotify.getDescription())
@@ -43,18 +45,25 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
                         .bigText(reminderToNotify.getDescription()))
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-        this.notificationManager.notify(reminderToNotify.getId(), builder.build());
+        builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
+
+        builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_INSISTENT;
+
+        this.notificationManager.notify(reminderToNotify.getId(), notification);
     }
 
+    //Code from android documentation
     private void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "TEMP";
-            String description = "TEMP";
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("TEMP", name, importance);
-            channel.setDescription(description);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, NOTIFICATION_CHANNEL, importance);
+            channel.setDescription(NOTIFICATION_CHANNEL);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             notificationManager = context.getSystemService(NotificationManager.class);

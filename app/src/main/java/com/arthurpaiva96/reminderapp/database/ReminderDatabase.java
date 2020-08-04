@@ -14,7 +14,7 @@ public abstract class ReminderDatabase extends RoomDatabase {
 
     private static final String DATABASE_FILE_NAME = "reminder.db";
 
-    public abstract ReminderDAO getRoomReminderDAO();
+    public abstract ReminderDAO getReminderDAO();
 
     public static ReminderDatabase getInstance(Context context) {
         return Room.databaseBuilder(context, ReminderDatabase.class, DATABASE_FILE_NAME)
