@@ -37,6 +37,16 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        //Configure Email Button
+        Button configureEmailButton = findViewById(R.id.activity_menu_configure_email);
+        configureEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainMenuActivity.this,
+                        EmailFormActivity.class));
+            }
+        });
+
         //Plus Button
         FloatingActionButton floatAddRemindersButton = findViewById(R.id.activity_menu_float_add);
         floatAddRemindersButton.setOnClickListener(new View.OnClickListener() {

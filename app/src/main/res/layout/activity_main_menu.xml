@@ -1,42 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="2"
-    android:theme="@style/BackgroundColorWinter"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/BackgroundColorWinter">
 
-    <RelativeLayout
-        android:id="@+id/activity_menu_first_option"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+    <Button
+        android:id="@+id/activity_menu_new_reminder"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@id/activity_menu_reminder_list"
+        android:text="@string/activity_menu_new_reminder_text" />
 
-        <Button
-            android:id="@+id/activity_menu_new_reminder"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:text="@string/activity_menu_new_reminder_text" />
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/activity_menu_second_option"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
         <Button
             android:id="@+id/activity_menu_reminder_list"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
             android:text="@string/activity_menu_reminder_list_text" />
+
+        <Button
+            android:id="@+id/activity_menu_configure_email"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_menu_reminder_list"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="@string/activity_menu_configure_email" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_menu_float_add"
@@ -50,5 +47,4 @@
             android:focusable="true"
             app:srcCompat="@drawable/ic_stat_add" />
 
-    </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

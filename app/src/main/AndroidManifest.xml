@@ -28,6 +28,7 @@
 
         <activity android:name=".ui.activity.ReminderListActivity" />
         <activity android:name=".ui.activity.ReminderFormActivity"/>
+        <activity android:name=".ui.activity.EmailFormActivity" />
 
         <receiver android:name=".broadcast.receiver.ReminderBroadcastReceiver" android:process=":remote"
             android:directBootAware="true" android:enabled="true"/>

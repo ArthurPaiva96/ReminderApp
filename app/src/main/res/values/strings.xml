@@ -9,4 +9,10 @@
     <string name="activity_reminder_form_save_button_text">Me lembre!</string>
     <string name="activity_reminder_list_menu_edit_text">Editar lembrete</string>
     <string name="activity_reminder_list_menu_delete_text">Remover lembrete</string>
+    <string name="activity_email_form_email">E-mail</string>
+    <string name="activity_email_form_email_input">Digite um Gmail para receber os lembretes</string>
+    <string name="activity_email_form_password">Senha</string>
+    <string name="activity_email_form_password_input">Digite a senha desse e-mail</string>
+    <string name="activity_email_form_save_button">Salvar e-mail</string>
+    <string name="activity_menu_configure_email">Configurar E-mail</string>
 </resources>
