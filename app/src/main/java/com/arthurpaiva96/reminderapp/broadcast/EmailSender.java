@@ -18,15 +18,15 @@ import javax.mail.internet.MimeMessage;
 public class EmailSender {
 
     private final String senderAndReceiverEmail;
+    private final String password;
     private String subject = "[ReminderApp] - Lembrete: ";
     private final String message;
-    private final String password;
 
-    public EmailSender(String senderAndReceiverEmail, String subject, String message, String password){
+    public EmailSender(String senderAndReceiverEmail,  String password, String subject, String message){
         this.senderAndReceiverEmail = senderAndReceiverEmail;
+        this.password = password;
         this.subject += subject;
         this.message = message;
-        this.password = password;
     }
 
     public void sendReminderEmail(){
@@ -64,12 +64,27 @@ public class EmailSender {
         return message;
     }
 
+    //some anti-virus may block this. in my case, avast did it
+    //I had to turn it off
     private Properties configureConnection() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth","true");
         properties.put("mail.smtp.starttls.enable","true");
         properties.put("mail.smtp.host","smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
+
+
+        //Second option if the first break
+//        properties.setProperty("mail.transport.protocol", "smtp");
+//        properties.setProperty("mail.host", "smtp.gmail.com");
+//        properties.put("mail.smtp.auth", "true");
+//        properties.put("mail.smtp.port", "465");
+//        properties.put("mail.smtp.socketFactory.port", "465");
+//        properties.put("mail.smtp.socketFactory.class",
+//                "javax.net.ssl.SSLSocketFactory");
+//        properties.put("mail.smtp.socketFactory.fallback", "false");
+//        properties.setProperty("mail.smtp.quitwait", "false");
+
         return properties;
     }
 

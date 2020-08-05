@@ -7,13 +7,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
 import com.arthurpaiva96.reminderapp.R;
+import com.arthurpaiva96.reminderapp.broadcast.EmailSender;
+import com.arthurpaiva96.reminderapp.database.EmailDatabase;
 import com.arthurpaiva96.reminderapp.database.ReminderDatabase;
+import com.arthurpaiva96.reminderapp.model.EmailReminder;
 import com.arthurpaiva96.reminderapp.model.Reminder;
+
+import java.util.List;
 
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.KEY_REMINDER_EXTRA;
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.NOTIFICATION_CHANNEL;
@@ -24,15 +31,40 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //TODO set up notification and other things(alarm and e-mail)
+
         this.createNotificationChannel(context);
         int reminderToNotifyId = (int) intent.getSerializableExtra(KEY_REMINDER_EXTRA);
-        ReminderDatabase database = ReminderDatabase.getInstance(context);
+        ReminderDatabase reminderDatabase = ReminderDatabase.getInstance(context);
+        EmailDatabase emailDatabase = EmailDatabase.getInstance(context);
 
-        Reminder reminderToNotify = database.getReminderDAO().getReminderById(reminderToNotifyId);
+        List<EmailReminder> emailReminder = emailDatabase.getEmailDAO().getAllEmails();
+
+        Reminder reminderToNotify = reminderDatabase.getReminderDAO().getReminderById(reminderToNotifyId);
 
         if(reminderToNotify != null) sendNotification(context, reminderToNotify);
 
+        if(thereIsInternetConnection(context) && emailReminder.size() > 0 && reminderToNotify != null)
+            sendNotificationEmail(emailReminder.get(0), reminderToNotify);
+
+    }
+
+    private void sendNotificationEmail(EmailReminder emailReminder, Reminder reminderToNotify) {
+        EmailSender emailSender = new EmailSender(
+                emailReminder.getEmail(),
+                emailReminder.getPassword(),
+                reminderToNotify.getTitle(),
+                reminderToNotify.getDescription());
+
+
+        emailSender.sendReminderEmail();
+    }
+
+    private boolean thereIsInternetConnection(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     //TODO customize notification
