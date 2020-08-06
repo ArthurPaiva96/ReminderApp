@@ -21,4 +21,5 @@ public interface ConstantsReminderApp {
     String KEY_REMINDER_EXTRA = "reminder";
     int DEFAULT_ID = 0;
     String NOTIFICATION_CHANNEL = "notification_channel";
+
 }

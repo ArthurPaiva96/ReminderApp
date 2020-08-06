@@ -117,6 +117,7 @@ public class ReminderFormView {
                     context.startActivity(new Intent(context, ReminderListActivity.class));
 
                     ((Activity) context).finish();
+
                 }else {
                     Toast.makeText(context, TOAST_REMINDER_FORM_FIELD_CANT_BE_NULL,
                             Toast.LENGTH_LONG).show();

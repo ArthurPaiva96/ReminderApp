@@ -18,6 +18,17 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+
+        //Novo Lembrete Button
+        Button addRemindersButton = findViewById(R.id.activity_menu_new_reminder);
+        addRemindersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainMenuActivity.this,
+                        ReminderFormActivity.class));
+            }
+        });
+
         //Lista de Lembretes Button
         Button showRemindersButton = findViewById(R.id.activity_menu_reminder_list);
         showRemindersButton.setOnClickListener(new View.OnClickListener() {
@@ -28,14 +39,6 @@ public class MainMenuActivity extends AppCompatActivity {
              }
          });
 
-        //Novo Lembrete Button
-        Button addRemindersButton = findViewById(R.id.activity_menu_new_reminder);
-        addRemindersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainMenuActivity.this.startAddReminderActivity();
-            }
-        });
 
         //Configure Email Button
         Button configureEmailButton = findViewById(R.id.activity_menu_configure_email);
@@ -47,18 +50,8 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        //Plus Button
-        FloatingActionButton floatAddRemindersButton = findViewById(R.id.activity_menu_float_add);
-        floatAddRemindersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainMenuActivity.this.startAddReminderActivity();
-            }
-        });
+
     }
 
-    private void startAddReminderActivity(){
-        startActivity(new Intent(MainMenuActivity.this,
-                ReminderFormActivity.class));
-    }
+
 }

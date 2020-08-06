@@ -44,11 +44,6 @@ public class ReminderFormActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     private void fillFormWithExtra() {
         Reminder reminderExtra = (Reminder) getIntent().getSerializableExtra(KEY_REMINDER_EXTRA);
 
@@ -67,10 +62,10 @@ public class ReminderFormActivity extends AppCompatActivity {
 
     private void getUserInputInfo() {
 
-        this.reminderTitleInput = findViewById(R.id.activity_reminder_form_title);
-        this.reminderDescriptionInput = findViewById(R.id.activity_reminder_form_description);
-        this.reminderDateInput = findViewById(R.id.activity_reminder_form_date);
-        this.reminderHourInput = findViewById(R.id.activity_reminder_form_hour);
+        this.reminderTitleInput = findViewById(R.id.activity_reminder_form_title_input);
+        this.reminderDescriptionInput = findViewById(R.id.activity_reminder_form_description_input);
+        this.reminderDateInput = findViewById(R.id.activity_reminder_form_date_input);
+        this.reminderHourInput = findViewById(R.id.activity_reminder_form_hour_input);
 
         this.reminderDateInput.setInputType(EditorInfo.TYPE_NULL);
         this.reminderHourInput.setInputType(EditorInfo.TYPE_NULL);

@@ -1,5 +1,6 @@
 package com.arthurpaiva96.reminderapp.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthurpaiva96.reminderapp.R;
 import com.arthurpaiva96.reminderapp.ui.ReminderListView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TITLE_LIST;
 
@@ -28,6 +30,16 @@ public class ReminderListActivity extends AppCompatActivity {
         this.reminderListView  = new ReminderListView(ReminderListActivity.this);
 
         final ListView reminderListView = findViewById(R.id.activity_reminder_list_list);
+
+        //Plus Button
+        FloatingActionButton floatAddRemindersButton = findViewById(R.id.activity_menu_float_add);
+        floatAddRemindersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ReminderListActivity.this,
+                        ReminderFormActivity.class));
+            }
+        });
 
 
         this.reminderListView.configureAdapter(reminderListView);

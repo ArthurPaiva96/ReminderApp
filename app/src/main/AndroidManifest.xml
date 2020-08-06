@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ReminderListActivity" />
+        <activity android:name=".ui.activity.ReminderListActivity" android:launchMode="singleInstance" />
         <activity android:name=".ui.activity.ReminderFormActivity"/>
         <activity android:name=".ui.activity.EmailFormActivity" />
 

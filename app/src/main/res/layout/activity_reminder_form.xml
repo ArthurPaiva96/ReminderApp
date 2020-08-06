@@ -8,45 +8,109 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:id="@+id/activity_reminder_form_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:inputType="textCapWords"
-            android:hint="@string/activity_reminder_form_title_hint"
-            android:importantForAutofill="no" />
+            android:textSize="24sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/activity_reminder_form_title" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_reminder_form_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="textCapWords"
+                android:hint="@string/activity_reminder_form_title_hint"
+                android:importantForAutofill="no" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
             android:id="@+id/activity_reminder_form_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:inputType="text"
-            android:hint="@string/activity_reminder_form_description_hint"
-            android:importantForAutofill="no" />
+            android:textSize="24sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/activity_reminder_form_description" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_reminder_form_description_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:hint="@string/activity_reminder_form_description_hint"
+                android:importantForAutofill="no" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
             android:id="@+id/activity_reminder_form_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_margin="8dp"
-            android:focusable="false"
-            android:hint="@string/activity_reminder_form_date_hint"
-            android:inputType="date"
-            android:importantForAutofill="no" />
+            android:textSize="24sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/activity_reminder_form_date" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_reminder_form_date_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="8dp"
+                android:focusable="false"
+                android:hint="@string/activity_reminder_form_date_hint"
+                android:inputType="date"
+                android:importantForAutofill="no" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
             android:id="@+id/activity_reminder_form_hour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_margin="8dp"
-            android:focusable="false"
-            android:hint="@string/activity_reminder_form_hour_hint"
-            android:inputType="none"
-            android:importantForAutofill="no" />
+            android:textSize="24sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/activity_reminder_form_hour" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_reminder_form_hour_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="8dp"
+                android:focusable="false"
+                android:hint="@string/activity_reminder_form_hour_hint"
+                android:inputType="none"
+                android:importantForAutofill="no" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
@@ -55,6 +119,8 @@
             android:id="@+id/activity_reminder_form_save_button"
             android:layout_margin="8dp"
             android:text="@string/activity_reminder_form_save_button_text" />
+
+
 
 
     </LinearLayout>
