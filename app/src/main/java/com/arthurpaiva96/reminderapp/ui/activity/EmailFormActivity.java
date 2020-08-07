@@ -8,7 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthurpaiva96.reminderapp.R;
+import com.arthurpaiva96.reminderapp.database.EmailDatabase;
+import com.arthurpaiva96.reminderapp.model.EmailReminder;
 import com.arthurpaiva96.reminderapp.ui.EmailFormView;
+
+import java.util.List;
 
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.TITLE_EMAIL_FORM;
 
@@ -32,6 +36,12 @@ public class EmailFormActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        retriveEmail();
+    }
+
     private void getUserInputInfo() {
         this.email = findViewById(R.id.activity_email_form_email_input);
         this.password = findViewById(R.id.activity_email_form_password_input);
@@ -42,5 +52,18 @@ public class EmailFormActivity extends AppCompatActivity {
 
         this.emailFormView.saveButtonBehavior(saveEmailButton,
                 this.email, this.password);
+    }
+
+    private void retriveEmail() {
+        EmailDatabase emailDatabase = EmailDatabase.getInstance(this);
+        List<EmailReminder> allEmails = emailDatabase.getEmailDAO().getAllEmails();
+
+        if(allEmails.size() > 0){
+            String email = allEmails.get(0).getEmail();
+            String password = allEmails.get(0).getPassword();
+
+            this.email.setText(email);
+            this.password.setText(password);
+        }
     }
 }
