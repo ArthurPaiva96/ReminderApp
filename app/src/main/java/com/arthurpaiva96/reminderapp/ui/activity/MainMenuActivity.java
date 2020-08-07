@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthurpaiva96.reminderapp.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainMenuActivity extends AppCompatActivity {
 

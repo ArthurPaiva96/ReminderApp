@@ -18,8 +18,11 @@ public interface ConstantsReminderApp {
     String TOAST_AFTER_ADD_EMAIL = "Novo e-mail definido! ;)";
     String TOAST_REMINDER_FORM_FIELD_NULL_OR_INCORRECT = "Algum campo está vazio ou o e-mail não é Gmail";
 
+    String FOREGROUND_TITLE = "ReminderApp está ativo!";
+
     String KEY_REMINDER_EXTRA = "reminder";
     int DEFAULT_ID = 0;
     String NOTIFICATION_CHANNEL = "notification_channel";
+    String FOREGROUND_CHANNEL = "foreground_channel";
 
 }

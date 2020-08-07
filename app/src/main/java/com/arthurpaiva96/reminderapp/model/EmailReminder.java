@@ -1,8 +1,6 @@
 package com.arthurpaiva96.reminderapp.model;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -53,8 +51,7 @@ public class EmailReminder {
     }
 
     public boolean isGmail(){
-        Log.e(this.email + " ", "password: " + this.password);
-        Log.e(String.valueOf(this.allFieldsAreNotNull()), "fieldsNull: ");
+
         if(email.indexOf('@') < 0) return false;
 
         return email.substring(email.indexOf('@')).equals("@gmail.com");

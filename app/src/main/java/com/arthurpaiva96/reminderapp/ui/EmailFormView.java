@@ -2,7 +2,6 @@ package com.arthurpaiva96.reminderapp.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,9 +52,6 @@ public class EmailFormView {
 
     private boolean saveUserInputAsEmail(String email, String password) {
         EmailReminder newEmailReminder = new EmailReminder(email, password);
-
-        Log.e(newEmailReminder.getEmail() + " ", "password: " + newEmailReminder.getPassword());
-        Log.e(String.valueOf(newEmailReminder.allFieldsAreNotNull()), "fieldsNull: ");
 
         if(newEmailReminder.allFieldsAreNotNull() && newEmailReminder.isGmail()){
             saveEmail(newEmailReminder);

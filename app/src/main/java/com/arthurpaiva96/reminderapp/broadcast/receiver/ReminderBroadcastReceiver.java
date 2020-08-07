@@ -67,7 +67,7 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    //TODO customize notification
+
     private void sendNotification(Context context, Reminder reminderToNotify) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)

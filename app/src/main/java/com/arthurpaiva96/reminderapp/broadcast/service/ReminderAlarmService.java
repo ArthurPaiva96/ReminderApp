@@ -21,6 +21,9 @@ import com.arthurpaiva96.reminderapp.model.Reminder;
 
 import java.util.List;
 
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.FOREGROUND_CHANNEL;
+import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.FOREGROUND_TITLE;
+
 public class ReminderAlarmService extends Service {
 
     @Override
@@ -71,10 +74,8 @@ public class ReminderAlarmService extends Service {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private void startMyOwnForeground() {
-        //TODO customize
-        String NOTIFICATION_CHANNEL_ID = "example.permanence";
-        String channelName = "Background Service";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+
+        NotificationChannel chan = new NotificationChannel(FOREGROUND_CHANNEL, FOREGROUND_CHANNEL, NotificationManager.IMPORTANCE_NONE);
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
@@ -82,9 +83,9 @@ public class ReminderAlarmService extends Service {
         assert manager != null;
         manager.createNotificationChannel(chan);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, FOREGROUND_CHANNEL);
         Notification notification = notificationBuilder.setOngoing(true)
-                .setContentTitle("App is running in background")
+                .setContentTitle(FOREGROUND_TITLE)
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build();
