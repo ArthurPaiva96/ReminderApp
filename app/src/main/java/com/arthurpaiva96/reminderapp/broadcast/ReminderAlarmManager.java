@@ -34,15 +34,6 @@ public class ReminderAlarmManager {
         }
     }
 
-//    private long calculateTimeInMillis(String hour) {
-//
-//        Calendar reminderDate = Calendar.getInstance();
-//        reminderDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour.substring(0, 2)));
-//        reminderDate.set(Calendar.MINUTE, Integer.parseInt(hour.substring(3,5)));
-//
-//        return reminderDate.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-//    }
-
     private void setUpAlarm(Reminder reminder, Calendar reminderDate) {
 
         PendingIntent pendingIntent = setupIntent(reminder);

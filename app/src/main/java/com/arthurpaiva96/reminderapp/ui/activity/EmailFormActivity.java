@@ -39,7 +39,7 @@ public class EmailFormActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        retriveEmail();
+        retrieveEmail();
     }
 
     private void getUserInputInfo() {
@@ -54,7 +54,7 @@ public class EmailFormActivity extends AppCompatActivity {
                 this.email, this.password);
     }
 
-    private void retriveEmail() {
+    private void retrieveEmail() {
         EmailDatabase emailDatabase = EmailDatabase.getInstance(this);
         List<EmailReminder> allEmails = emailDatabase.getEmailDAO().getAllEmails();
 

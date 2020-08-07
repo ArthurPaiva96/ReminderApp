@@ -30,10 +30,11 @@ public class ReminderAlarmService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
             startMyOwnForeground();
-        else
-            startForeground(1, new Notification());
+        }else{
+            startForeground(Integer.MAX_VALUE, new Notification());
+        }
 
         loadRemindersAlarms();
 
@@ -75,13 +76,13 @@ public class ReminderAlarmService extends Service {
     @RequiresApi(Build.VERSION_CODES.O)
     private void startMyOwnForeground() {
 
-        NotificationChannel chan = new NotificationChannel(FOREGROUND_CHANNEL, FOREGROUND_CHANNEL, NotificationManager.IMPORTANCE_NONE);
-        chan.setLightColor(Color.BLUE);
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationChannel notificationChannel = new NotificationChannel(FOREGROUND_CHANNEL, FOREGROUND_CHANNEL, NotificationManager.IMPORTANCE_NONE);
+        notificationChannel.setLightColor(Color.BLUE);
+        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert manager != null;
-        manager.createNotificationChannel(chan);
+        manager.createNotificationChannel(notificationChannel);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, FOREGROUND_CHANNEL);
         Notification notification = notificationBuilder.setOngoing(true)
@@ -89,7 +90,7 @@ public class ReminderAlarmService extends Service {
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build();
-        startForeground(2, notification);
+        startForeground(Integer.MAX_VALUE - 1, notification);
     }
 
     private void callRestartBroadcast() {

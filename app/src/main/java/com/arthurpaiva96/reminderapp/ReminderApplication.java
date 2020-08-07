@@ -15,9 +15,9 @@ public class ReminderApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ReminderAlarmService mReminderAlarmSerice = new ReminderAlarmService();
-        mServiceIntent = new Intent(this, mReminderAlarmSerice.getClass());
-        if (!isMyServiceRunning(mReminderAlarmSerice.getClass())) {
+        ReminderAlarmService mReminderAlarmService = new ReminderAlarmService();
+        mServiceIntent = new Intent(this, mReminderAlarmService.getClass());
+        if (!isMyServiceRunning(mReminderAlarmService.getClass())) {
             startService(mServiceIntent);
         }
     }

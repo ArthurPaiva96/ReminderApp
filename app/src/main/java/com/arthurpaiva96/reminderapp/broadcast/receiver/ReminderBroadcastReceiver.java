@@ -22,7 +22,6 @@ import com.arthurpaiva96.reminderapp.model.Reminder;
 
 import java.util.List;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.KEY_REMINDER_EXTRA;
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.NOTIFICATION_CHANNEL;
 
@@ -70,6 +69,7 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
 
 
     private void sendNotification(Context context, Reminder reminderToNotify) {
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(reminderToNotify.getTitle())
@@ -86,6 +86,7 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
         notification.flags = Notification.FLAG_INSISTENT;
 
         this.notificationManager.notify(reminderToNotify.getId(), notification);
+
     }
 
     //Code from android documentation
@@ -103,7 +104,7 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
             notificationManager.createNotificationChannel(channel);
         }else{
             this.notificationManager = (NotificationManager)
-                    context.getSystemService(NOTIFICATION_SERVICE);
+                    context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
     }
 }
