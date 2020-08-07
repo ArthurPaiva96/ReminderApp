@@ -22,6 +22,7 @@ import com.arthurpaiva96.reminderapp.model.Reminder;
 
 import java.util.List;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.KEY_REMINDER_EXTRA;
 import static com.arthurpaiva96.reminderapp.ConstantsReminderApp.NOTIFICATION_CHANNEL;
 
@@ -75,7 +76,7 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
                 .setContentText(reminderToNotify.getDescription())
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(reminderToNotify.getDescription()))
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
 
@@ -100,6 +101,9 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
             // or other notification behaviors after this
             notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+        }else{
+            this.notificationManager = (NotificationManager)
+                    context.getSystemService(NOTIFICATION_SERVICE);
         }
     }
 }
